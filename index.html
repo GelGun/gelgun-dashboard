@@ -305,12 +305,12 @@
 
 <!-- NAV -->
 <nav class="nav-scroll" id="nav">
-  <button class="nav-btn active" onclick="scrollTo('summary')">Summary</button>
-  <button class="nav-btn" onclick="scrollTo('levers')">AI Levers</button>
-  <button class="nav-btn" onclick="scrollTo('roadmap')">Roadmap</button>
-  <button class="nav-btn" onclick="scrollTo('poland')">Poland</button>
-  <button class="nav-btn" onclick="scrollTo('stock')">Stock</button>
-  <button class="nav-btn" onclick="scrollTo('risks')">Risks</button>
+  <button class="nav-btn active" onclick="scrollToSection('summary')">Summary</button>
+  <button class="nav-btn" onclick="scrollToSection('levers')">AI Levers</button>
+  <button class="nav-btn" onclick="scrollToSection('roadmap')">Roadmap</button>
+  <button class="nav-btn" onclick="scrollToSection('poland')">Poland</button>
+  <button class="nav-btn" onclick="scrollToSection('stock')">Stock</button>
+  <button class="nav-btn" onclick="scrollToSection('risks')">Risks</button>
 </nav>
 
 <div class="container">
@@ -853,9 +853,12 @@
 </div>
 
 <script>
-  function scrollTo(id) {
+  function scrollToSection(id) {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!el) return;
+    const navHeight = document.getElementById('nav').offsetHeight;
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
 
     // Update active nav
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
