@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GelGun · 2M CZK Growth Plan</title>
+<style>
+  :root {
+    --brand: #FF6B00;
+    --brand-dark: #cc5500;
+    --brand-light: #fff3e8;
+    --accent: #1A1A2E;
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --red: #dc2626;
+    --yellow: #d97706;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --card: #ffffff;
+    --bg: #f9fafb;
+    --radius: 14px;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; font-size: 15px; }
+
+  /* ─── HEADER ─── */
+  .hero {
+    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+    padding: 32px 20px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(255,107,0,.18) 0%, transparent 65%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,107,0,.2);
+    color: #FF8C42;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,107,0,.35);
+    margin-bottom: 12px;
+  }
+  .hero h1 { color: #fff; font-size: 26px; font-weight: 800; letter-spacing: -.5px; line-height: 1.2; }
+  .hero h1 span { color: var(--brand); }
+  .hero-sub { color: rgba(255,255,255,.6); font-size: 13px; margin-top: 6px; }
+  .hero-date { color: rgba(255,255,255,.4); font-size: 11px; margin-top: 4px; }
+
+  /* ─── SCROLL NAV ─── */
+  .nav-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 14px 16px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-scroll::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .nav-btn.active, .nav-btn:hover {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+  }
+
+  /* ─── LAYOUT ─── */
+  .container { max-width: 680px; margin: 0 auto; padding: 0 14px 80px; }
+  .section { padding-top: 28px; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding-left: 2px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .card-header {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-title { font-size: 15px; font-weight: 700; }
+  .card-subtitle { font-size: 12px; color: var(--muted); }
+  .card-body { padding: 16px 18px; }
+
+  /* ─── KPI GRID ─── */
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .kpi-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 800; color: var(--text); letter-spacing: -1px; }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.orange { color: var(--brand); }
+  .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-row { margin-bottom: 14px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+  .progress-label span:first-child { font-weight: 600; }
+  .progress-label span:last-child { color: var(--muted); font-weight: 500; }
+  .progress-track {
+    height: 8px;
+    background: var(--bg);
+    border-radius: 99px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--brand) 0%, #ff8c42 100%);
+    transition: width .6s ease;
+  }
+  .progress-fill.green { background: linear-gradient(90deg, var(--green) 0%, #4ade80 100%); }
+  .progress-fill.blue { background: linear-gradient(90deg, var(--blue) 0%, #60a5fa 100%); }
+
+  /* ─── LEVER TABLE ─── */
+  .lever-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .lever-item:last-child { border-bottom: none; }
+  .lever-rank {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--brand-light);
+    color: var(--brand);
+    font-size: 12px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .lever-info { flex: 1; min-width: 0; }
+  .lever-name { font-size: 14px; font-weight: 600; }
+  .lever-detail { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .lever-meta { text-align: right; flex-shrink: 0; }
+  .lever-czk { font-size: 15px; font-weight: 800; color: var(--text); white-space: nowrap; }
+  .lever-hours { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ─── TIMELINE ─── */
+  .month-card {
+    border-left: 3px solid var(--border);
+    margin-left: 14px;
+    padding: 0 0 18px 20px;
+    position: relative;
+  }
+  .month-card::before {
+    content: '';
+    position: absolute;
+    left: -7px; top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 2px solid #fff;
+  }
+  .month-card.peak { border-left-color: var(--brand); }
+  .month-card.peak::before { background: var(--brand); }
+  .month-card.current { border-left-color: var(--blue); }
+  .month-card.current::before { background: var(--blue); }
+  .month-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .month-label .badge-peak { color: var(--brand); font-size: 11px; margin-left: 6px; }
+  .month-label .badge-current { color: var(--blue); font-size: 11px; margin-left: 6px; }
+  .month-czk { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -.5px; margin: 2px 0 4px; }
+  .month-actions { font-size: 13px; color: var(--text); line-height: 1.5; }
+  .month-stock { font-size: 12px; color: var(--muted); margin-top: 4px; display: flex; align-items: flex-start; gap: 4px; }
+
+  /* ─── RISK TABLE ─── */
+  .risk-item {
+    display: flex; gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .risk-item:last-child { border-bottom: none; }
+  .risk-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .risk-dot.red { background: var(--red); }
+  .risk-dot.yellow { background: var(--yellow); }
+  .risk-dot.green { background: var(--green); }
+  .risk-text { font-size: 13px; font-weight: 600; flex: 1; }
+  .risk-mit { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  /* ─── PL SECTION ─── */
+  .pl-stat { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .pl-stat:last-child { border-bottom: none; }
+  .pl-label { font-size: 13px; color: var(--muted); flex: 1; }
+  .pl-value { font-size: 13px; font-weight: 700; }
+
+  /* ─── SUMMARY EQUATION ─── */
+  .equation-box {
+    background: linear-gradient(135deg, var(--brand) 0%, #ff8c42 100%);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .equation-text { font-size: 16px; font-weight: 700; opacity: .9; }
+  .equation-result { font-size: 30px; font-weight: 900; letter-spacing: -1px; margin-top: 4px; }
+  .equation-sub { font-size: 12px; opacity: .75; margin-top: 4px; }
+
+  /* ─── STOCK TABLE ─── */
+  .stock-row { display: flex; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--border); align-items: center; }
+  .stock-row:last-child { border-bottom: none; }
+  .stock-period { font-size: 13px; flex: 1; font-weight: 500; }
+  .stock-amount { font-size: 13px; font-weight: 700; color: var(--brand); white-space: nowrap; }
+  .stock-note { font-size: 11px; color: var(--muted); }
+
+  /* ─── TAG PILL ─── */
+  .pill {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-right: 4px;
+  }
+  .pill-green { background: var(--green-bg); color: var(--green); }
+  .pill-blue { background: var(--blue-bg); color: var(--blue); }
+  .pill-orange { background: var(--brand-light); color: var(--brand-dark); }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+  }
+
+  @media (min-width: 480px) {
+    .hero h1 { font-size: 30px; }
+    .kpi-value { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">v2 · AI-Automation Plan</div>
+  <h1>GelGun Path to<br><span>2,000,000 CZK</span></h1>
+  <div class="hero-sub">CZ growth · AI levers · PL expansion</div>
+  <div class="hero-date">Prepared 21 April 2026 · Owner: Dominik Duchek</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-scroll" id="nav">
+  <button class="nav-btn active" onclick="scrollTo('summary')">Summary</button>
+  <button class="nav-btn" onclick="scrollTo('levers')">AI Levers</button>
+  <button class="nav-btn" onclick="scrollTo('roadmap')">Roadmap</button>
+  <button class="nav-btn" onclick="scrollTo('poland')">Poland</button>
+  <button class="nav-btn" onclick="scrollTo('stock')">Stock</button>
+  <button class="nav-btn" onclick="scrollTo('risks')">Risks</button>
+</nav>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════ SUMMARY ═══════════════════════════════ -->
+  <div class="section" id="summary">
+    <div class="section-title">Executive Summary</div>
+
+    <div class="equation-box">
+      <div class="equation-text">Sessions +30% × CVR +30% × AOV +10%</div>
+      <div class="equation-result">≈ 1.86×</div>
+      <div class="equation-sub">Growth equation · Almost all work is AI-drafted & user-approved</div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Baseline (TTM)</div>
+        <div class="kpi-value">1.07M</div>
+        <div class="kpi-sub">CZK last 365 days</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Target (next 365d)</div>
+        <div class="kpi-value green">2.00M</div>
+        <div class="kpi-sub">CZK · +87%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Net uplift (w/ overlap)</div>
+        <div class="kpi-value orange">1.25M</div>
+        <div class="kpi-sub">CZK expected</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Gap to close</div>
+        <div class="kpi-value">921K</div>
+        <div class="kpi-sub">CZK required</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="card-body">
+        <div class="section-title" style="margin-bottom:14px">Sources of Uplift</div>
+
+        <div class="progress-row">
+          <div class="progress-label">
+            <span>AI levers (CZ) — 10 automations</span>
+            <span>756K CZK</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:60%"></div></div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-label">
+            <span>Pre-peak stock order (Aug 31)</span>
+            <span>175K CZK</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:14%"></div></div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-label">
+            <span>PL expansion (soft launch Q3)</span>
+            <span>315K CZK</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill blue" style="width:25%"></div></div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:10px;border-top:1px solid var(--border)">
+          <span style="font-size:13px;font-weight:700">Total net uplift</span>
+          <span style="font-size:18px;font-weight:800;color:var(--green)">1,246K CZK</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">
+          ~325K margin of safety above the 921K gap required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ AI LEVERS ═══════════════════════════════ -->
+  <div class="section" id="levers">
+    <div class="section-title">AI Automation Levers</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff3e8">⚡</div>
+        <div>
+          <div class="card-title">10 Levers · 1,330K CZK (raw)</div>
+          <div class="card-subtitle">Ranked by revenue-per-hour of Dominik's time</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="lever-item">
+          <div class="lever-rank">1</div>
+          <div class="lever-info">
+            <div class="lever-name">Pre-peak Stock Order</div>
+            <div class="lever-detail">Run restock model on Aug 31. Claude pulls μ×3.5×120 per family, flags sets to bulk up.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">250K</div>
+            <div class="lever-hours">~6 h</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">2</div>
+          <div class="lever-info">
+            <div class="lever-name">Meta Ads Agency Mode</div>
+            <div class="lever-detail">Claude acts as external agency: hypothesis → test → weekly digest. No monthly fee.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">200K</div>
+            <div class="lever-hours">30 min/wk</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">3</div>
+          <div class="lever-info">
+            <div class="lever-name">PDP Standardisation</div>
+            <div class="lever-detail">Emotional intro → 5-7 bullets → obsah balení → hydratace → FAQ → EU záruka. Chrome media audit first.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">180K</div>
+            <div class="lever-hours">~12 h</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">4</div>
+          <div class="lever-info">
+            <div class="lever-name">Email Redesign + Segmentation</div>
+            <div class="lever-detail">5 segments (first-time, repeat, ammo-only, set-buyer, lapsed). Modern mobile-responsive HTML in Shopify Flow.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">150K</div>
+            <div class="lever-hours">~8 h</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">5</div>
+          <div class="lever-info">
+            <div class="lever-name">Support Content Cluster</div>
+            <div class="lever-detail">6-8 SEO articles (hydratace, bezpečnost, výběr kuliček…). Blog → "Support". Auto-internal links.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">150K</div>
+            <div class="lever-hours">~6 h</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">6</div>
+          <div class="lever-info">
+            <div class="lever-name">Review Incentive Flow</div>
+            <div class="lever-detail">30K gel balls for 5★. Verified buyer gate, 1/household, 500-reward cap (~100 CZK cost/review). Target: +200-300 Google/Heureka reviews.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">100K</div>
+            <div class="lever-hours">~4 h</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">7</div>
+          <div class="lever-info">
+            <div class="lever-name">UGC Creator Programme</div>
+            <div class="lever-detail">Claude sources 3-5 TikTok creators, manages briefs, edits clips into Meta/TikTok-ready variants.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">100K</div>
+            <div class="lever-hours">~6 h/mo</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">8</div>
+          <div class="lever-info">
+            <div class="lever-name">Cross-sell / FBT Rules</div>
+            <div class="lever-detail">Claude reads 365d orders, proposes FBT pairs, writes Olda Connector script to deploy.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">80K</div>
+            <div class="lever-hours">~3 h</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">9</div>
+          <div class="lever-info">
+            <div class="lever-name">Meta Creative Brief</div>
+            <div class="lever-detail">15 min/wk. Feeds UGC programme with weekly "what's working / what needs replacing".</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">80K</div>
+            <div class="lever-hours">15 min/wk</div>
+          </div>
+        </div>
+
+        <div class="lever-item">
+          <div class="lever-rank">10</div>
+          <div class="lever-info">
+            <div class="lever-name">Competitor Monitor</div>
+            <div class="lever-detail">Weekly Chrome agent: prices, copy changes, new products at top 3 CZ competitors. Emails diff.</div>
+          </div>
+          <div class="lever-meta">
+            <div class="lever-czk">40K</div>
+            <div class="lever-hours">auto</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ ROADMAP ═══════════════════════════════ -->
+  <div class="section" id="roadmap">
+    <div class="section-title">Month-by-Month Roadmap · 180h budget</div>
+
+    <div class="month-card current">
+      <div class="month-label">May 2026 <span class="badge-current">● NOW</span></div>
+      <div class="month-czk">159,410 CZK</div>
+      <div class="month-actions">PDP media audit + rewrites (start Glock). Meta agency mode live. Review-incentive flow design.</div>
+      <div class="month-stock">📦 End-May delivery lands. Focus: sets + M416 top-sellers</div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-label">Jun 2026</div>
+      <div class="month-czk">139,483 CZK</div>
+      <div class="month-actions">PDPs for HK416 + M416. First Shopify Flow email redesign. Support cluster drafted (4 articles). Review flow launched.</div>
+      <div class="month-stock">📦 Monitor May sell-through. Glock top-up if ROP crossed.</div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-label">Jul 2026</div>
+      <div class="month-czk">139,483 CZK</div>
+      <div class="month-actions">Pistole landing page live. UGC creators signed (3). Cross-sell FBT via Olda deployed. Meta A/B learnings show.</div>
+      <div class="month-stock">📦 Pre-peak warning. Plan Aug order: 2× vs 2025.</div>
+    </div>
+
+    <div class="month-card peak">
+      <div class="month-label">Aug 2026 <span class="badge-peak">★ KEY DATE</span></div>
+      <div class="month-czk">159,410 CZK</div>
+      <div class="month-actions">★ Aug 31: Pre-peak stock order placed. All PDPs at 10/10. PL pre-launch prep (translations drafted, Shopify Markets config).</div>
+      <div class="month-stock">📦 Biggest order of year. μ×3.5×120 per family with 2× factor. Budget: ~600-700K CZK</div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-label">Sep 2026</div>
+      <div class="month-czk">139,483 CZK</div>
+      <div class="month-actions">PL soft launch (translations live, Meta PL small). Creative library built for Black Friday. Email segmentation complete.</div>
+      <div class="month-stock">📦 Pre-peak stock arriving mid-Sep through Oct (64-day LT).</div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-label">Oct 2026</div>
+      <div class="month-czk">179,336 CZK</div>
+      <div class="month-actions">BF creatives ready. Email list warmed. On-site urgency copy. Gift-card promo live.</div>
+      <div class="month-stock">📦 Stock at year-max. Verify sets fully in. Last-minute top-up if needed.</div>
+    </div>
+
+    <div class="month-card peak">
+      <div class="month-label">Nov 2026 <span class="badge-peak">★ BLACK FRIDAY</span></div>
+      <div class="month-czk">298,893 CZK</div>
+      <div class="month-actions">PEAK. Daily ads watch. Meta spend full. Daily email cadence last 3 days. Shopify Inbox staffed.</div>
+      <div class="month-stock">📦 Burn through Q4 stock. Watch for ROP—emergency express if critical.</div>
+    </div>
+
+    <div class="month-card peak">
+      <div class="month-label">Dec 2026 <span class="badge-peak">★ CHRISTMAS</span></div>
+      <div class="month-czk">298,893 CZK</div>
+      <div class="month-actions">Gift cards promoted. Last-order deadlines on PDP. PL Christmas bonus push.</div>
+      <div class="month-stock">📦 Mid-Dec: accept non-critical stockouts. Protect hero SKUs (HK416, M416, Glock MODRÝ).</div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-label">Jan 2027</div>
+      <div class="month-czk">99,631 CZK</div>
+      <div class="month-actions">Post-peak reset. Returns handled. Review-incentive follow-ups. PL performance review.</div>
+      <div class="month-stock">📦 Light replenishment. Preserve cash for Q1.</div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-label">Feb 2027</div>
+      <div class="month-czk">99,631 CZK</div>
+      <div class="month-actions">Quiet month. SEO content for next year. Brand voice audit in PL. Scope DACH legally.</div>
+      <div class="month-stock">📦 Standard restock resumes.</div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-label">Mar 2027</div>
+      <div class="month-czk">139,483 CZK</div>
+      <div class="month-actions">Spring warm-up content. New-season UGC shoots. PL Meta spend scaled if working.</div>
+      <div class="month-stock">📦 Modest pre-spring replenishment.</div>
+    </div>
+
+    <div class="month-card" style="padding-bottom:0">
+      <div class="month-label">Apr 2027</div>
+      <div class="month-czk">139,483 CZK</div>
+      <div class="month-actions">Year-1 retro. Refresh scenario model with real numbers. Year-2 target + DACH decision.</div>
+      <div class="month-stock">📦 Normal levels. Plan next pre-peak.</div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-body">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-weight:700;font-size:14px">Total roadmap</span>
+          <span style="font-size:20px;font-weight:900;color:var(--green)">1,992,620 CZK</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">
+          180h total · ~15h/month avg · Oct–Dec peaks at 58h (32%)
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+          <div style="font-size:12px;color:var(--muted)">
+            <strong style="color:var(--text)">⚠️ Calendar block now:</strong> Nov Black Friday week (10-15h in 7 days) + Dec 15-24 gift-card push
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ POLAND ═══════════════════════════════ -->
+  <div class="section" id="poland">
+    <div class="section-title">Poland Expansion</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#eff6ff">🇵🇱</div>
+        <div>
+          <div class="card-title">gel-gun.pl · Soft launch Q3</div>
+          <div class="card-subtitle">AI-translation + shared CZ stock + Packeta cheap-zone</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="pl-stat">
+          <span class="pl-label">Shopify architecture</span>
+          <span class="pl-value">Shopify Markets</span>
+        </div>
+        <div class="pl-stat">
+          <span class="pl-label">Legal entity</span>
+          <span class="pl-value">Keep CZ entity</span>
+        </div>
+        <div class="pl-stat">
+          <span class="pl-label">VAT</span>
+          <span class="pl-value">Watch OSS threshold</span>
+        </div>
+        <div class="pl-stat">
+          <span class="pl-label">Shipping</span>
+          <span class="pl-value">Packeta 70-90 CZK/pkg</span>
+        </div>
+        <div class="pl-stat">
+          <span class="pl-label">Support</span>
+          <span class="pl-value">Claude + 1 PL freelancer 2h/wk</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#f0fdf4">📊</div>
+        <div>
+          <div class="card-title">Year-1 PL Forecast (conservative)</div>
+          <div class="card-subtitle">15K sessions × 1.5% CVR × 1,400 CZK AOV</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="text-align:center;padding:8px 0 16px">
+          <div style="font-size:36px;font-weight:900;color:var(--brand);letter-spacing:-1px">315,000</div>
+          <div style="font-size:14px;color:var(--muted)">CZK incremental revenue</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid var(--border)">
+          <strong style="color:var(--text)">Signal rule:</strong> If PL shows &gt;2k sessions in month 1 at CVR &gt;1% → double down Q4. If weak → hold and revisit Q1 2027.
+        </div>
+
+        <div style="margin-top:14px">
+          <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">AI Workstreams for PL Launch</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="pill pill-orange">Translate 30 PDPs — 1 day</span>
+            <span class="pill pill-blue">Localise Meta ads — 2h</span>
+            <span class="pill pill-orange">Translate 8 articles — 1 day</span>
+            <span class="pill pill-blue">Email flows — 2h</span>
+            <span class="pill pill-green">PL support — Claude + freelancer</span>
+            <span class="pill pill-green">Competitor scan — Week 1 auto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ STOCK ═══════════════════════════════ -->
+  <div class="section" id="stock">
+    <div class="section-title">Stock Capital Plan</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff3e8">📦</div>
+        <div>
+          <div class="card-title">Year-1 Stock Cash Cycle</div>
+          <div class="card-subtitle">~1.4M CZK peak committed · converts to revenue</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="stock-row">
+          <div>
+            <div class="stock-period">End May 2026 delivery</div>
+            <div class="stock-note">Confirm sets specifically in advance</div>
+          </div>
+          <div class="stock-amount">~200K</div>
+        </div>
+
+        <div class="stock-row">
+          <div>
+            <div class="stock-period">Jun–Aug replenishment</div>
+            <div class="stock-note">Steady top-up; sets + top blasters</div>
+          </div>
+          <div class="stock-amount">400K</div>
+        </div>
+
+        <div class="stock-row" style="background:var(--brand-light);margin:0 -18px;padding:10px 18px">
+          <div>
+            <div class="stock-period" style="font-weight:700;color:var(--brand-dark)">★ Aug 31 pre-peak order</div>
+            <div class="stock-note">Biggest cash outlay. μ×3.5×120, 2× uplift vs 2025.</div>
+          </div>
+          <div class="stock-amount" style="color:var(--brand-dark)">600–700K</div>
+        </div>
+
+        <div class="stock-row">
+          <div>
+            <div class="stock-period">Nov–Dec peak stock (burning)</div>
+            <div class="stock-note">Sell-through absorbs. Avoid late emergency orders.</div>
+          </div>
+          <div class="stock-amount">~500K</div>
+        </div>
+
+        <div class="stock-row">
+          <div>
+            <div class="stock-period">Jan–Apr 2027</div>
+            <div class="stock-note">Normal operating levels</div>
+          </div>
+          <div class="stock-amount">~200K</div>
+        </div>
+
+        <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:10px;font-size:12px;color:var(--muted)">
+          <strong style="color:var(--text)">💡 Cashflow tip:</strong> If working capital is tight on the Aug outlay, explore a revolving line with Fio or a Shopify Capital advance. Peak revenue return expected Nov–Dec (60-90 day bridge).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ RISKS ═══════════════════════════════ -->
+  <div class="section" id="risks">
+    <div class="section-title">Risks &amp; Mitigations</div>
+
+    <div class="card">
+      <div class="card-body">
+
+        <div class="risk-item">
+          <div class="risk-dot red"></div>
+          <div>
+            <div class="risk-text">Pre-peak stock undersized for doubled demand</div>
+            <div class="risk-mit">Order at 2× the 2025 reference qty — don't try to be precise</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-dot yellow"></div>
+          <div>
+            <div class="risk-text">Cashflow stress from Aug 600-700K outlay</div>
+            <div class="risk-mit">Project cashflow in July. Consider Fio revolver or Shopify Capital.</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-dot yellow"></div>
+          <div>
+            <div class="risk-text">Supplier LT slips past 64 days on pre-peak</div>
+            <div class="risk-mit">Place Aug 20 instead of Aug 31 if supplier shows delay signal.</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-dot yellow"></div>
+          <div>
+            <div class="risk-text">PL VAT threshold crossed mid-year</div>
+            <div class="risk-mit">Monitor monthly PL revenue. At 200K CZK cumulative, consult accountant re: OSS.</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-dot yellow"></div>
+          <div>
+            <div class="risk-text">UGC creator programme under-delivers</div>
+            <div class="risk-mit">Rotate 1 creator/quarter. Volume matters more than polish.</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-dot green"></div>
+          <div>
+            <div class="risk-text">Review incentive abused</div>
+            <div class="risk-mit">Verified-buyer gate + 1-per-household cap + 500 total reward cap.</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-dot green"></div>
+          <div>
+            <div class="risk-text">PL early signals weak</div>
+            <div class="risk-mit">Kill ad spend, hold domain, revisit Q1 2027. PL downside is capped.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- KPI SECTION -->
+    <div class="section-title" style="margin-top:20px">Weekly KPIs to Track</div>
+    <div class="card">
+      <div class="card-body">
+        <div style="font-size:13px;line-height:2">
+          <span class="pill pill-blue">Revenue · Sessions · CVR · AOV</span>
+          <span class="pill pill-blue">Top 5 SKUs + days-to-ROP</span>
+          <span class="pill pill-orange">Meta ROAS (new MCP)</span>
+          <span class="pill pill-orange">Review count (Google + Heureka)</span>
+          <span class="pill pill-green">Email list + flow revenue</span>
+          <span class="pill pill-green">Stock capital deployed vs plan</span>
+          <span class="pill pill-blue">CZ + PL segmented once PL live</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px">
+          Monday briefing pipeline covers most of these. Two new adds: Meta ROAS + PL segment once live.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  GelGun s.r.o. · 2M CZK Growth Strategy v2 · April 2026
+</div>
+
+<script>
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Update active nav
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Highlight nav on scroll
+  const sections = ['summary','levers','roadmap','poland','stock','risks'];
+  const buttons = document.querySelectorAll('.nav-btn');
+
+  window.addEventListener('scroll', () => {
+    let current = 'summary';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < 120) current = id;
+    });
+    buttons.forEach((b, i) => {
+      b.classList.toggle('active', sections[i] === current);
+    });
+  });
+</script>
+</body>
+</html>
